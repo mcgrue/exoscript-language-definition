@@ -34,7 +34,7 @@
 			<key>comment</key>
 			<string>logic</string>
 			<key>match</key>
-			<string>-|>!|!=|=|&gt;|&lt;|&gt;=|&lt;=|%|&amp;|\?|:|\|\|</string>
+			<string>\+\+|\+|--|-|>!|!=|=|&gt;|&lt;|&gt;=|&lt;=|%|&amp;|\?|:|\|\|</string>
 			<key>name</key>
 			<string>keyword.operator.cs</string>
 		</dict>
