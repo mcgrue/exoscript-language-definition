@@ -6,7 +6,7 @@
   "patterns": [
     {
       "comment":"comment",
-      "match": "^(.*?)(/\*(.*?)$|//(.*?)$|#(.*?))$",
+      "match": "(/\*(.*?)$|//(.*?)$|#(.*?))$",
       "name":"comment.line.cs"
     },
     {
