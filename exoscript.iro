@@ -1,0 +1,83 @@
+name               = sample
+file_extensions [] = sample;
+
+styles [] {
+   .comments    : style color = "light_green";
+   .keywords    : style color = "orange";
+   .conditionals: style color = "pink";
+   
+   .literals : style {
+      color  = "orange";
+      italic = "true";
+   }
+
+   .variables   : style color = "white";
+   .operators   : style color = "red";
+}
+
+contexts[] {
+   main : context {
+   
+      // comments
+      : pattern {
+         regex         \= (====(=+))|(/\*(.*?)$|//(.*?)$|#(.*?))$
+         styles[]       = .comments;
+      }
+   
+      // The "~" check
+      : inline_push {
+         regex         \= (~)
+         styles []      = .conditionals;
+   
+         : eol_pop {}
+   
+         // number and boolean literals {
+         : pattern {
+            regex       \= ([^(a-zA-Z)]\\d+|true|false|none|null|((\\+|-)\\d+))
+            styles []   = .literals;
+         }
+   
+         // operators
+         : pattern {
+            regex       \= (\+\+|\+|--|-|>!|!=|=|&gt;|&lt;|&gt;=|&lt;=|%|&amp;|\?|:|\|\|)
+            styles []   = .operators;
+         }
+   
+         // imperatives with a preceding ~
+         : pattern {
+            regex       \= (ifd|if|setif|set|call)
+            styles []   = .keywords;
+         }
+         
+         : pattern {
+            regex       \= (\d)
+            styles []   = .literals;
+         }            
+      }
+   
+      // conditionals (The "[...]" check)
+      // Todo: the [They|He\She] check
+      // Todo: the [if random : hunting feral dogs|trying to find some clean drinking water|looking for a working sparkplug]
+   
+      : inline_push {
+         regex         \= (\[)
+         styles []      = .conditionals;
+   
+         : pop {
+            regex      \= (\])
+            styles []   = .conditionals;
+         }
+   
+         : pattern {
+            regex       \= (and|call|else|end|elseif|if|ifd|or|random|set|setif)
+            styles []   = .keywords;
+         }
+   
+         // number and boolean literals {
+         : pattern {
+            regex       \= ([^(a-zA-Z)]\\d+|true|false|none|null|((\\+|-)\\d+))
+            styles []   = .literals;
+         }
+      }
+   }
+}
