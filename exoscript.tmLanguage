@@ -83,7 +83,7 @@
 			<key>comment</key>
 			<string>open-squarebracket keywords</string>
 			<key>match</key>
-			<string>\[(and|call|else|elseif|end|if|ifd|or|random|set|setif|\|)\s</string>
+			<string>\[(and|call|elseif|if|ifd|or|random|set|setif|\|)\s|\[end\]|\[else\]</string>
 			<key>name</key>
 			<string>keyword.control.cs</string>
 		</dict>
