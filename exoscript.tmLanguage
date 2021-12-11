@@ -97,9 +97,14 @@
 		</dict>
 
 
-
-
-
+		<dict>
+			<key>comment</key>
+			<string>ands between brackets are keywords</string>
+			<key>match</key>
+			<string>(?:\ foo )(and)(?:\ bar )</string>
+			<key>name</key>
+			<string>keyword.operator.cs</string>
+		</dict>
 
 
 

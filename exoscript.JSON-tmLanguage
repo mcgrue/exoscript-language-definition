@@ -49,7 +49,7 @@
     },
     {
       "comment":"open-squarebracket keywords",
-      "match":"\[(and|call|else|elseif|end|if|ifd|or|random|set|setif|\|)\s",
+      "match":"\[(and|call|elseif|if|ifd|or|random|set|setif|\|)\s|\[end\]|\[else\]",
       "name":"keyword.control.cs"
     },
     {
