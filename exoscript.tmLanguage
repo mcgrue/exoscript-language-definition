@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>exotxt</string>
+		<string>exo.txt</string>
+		<string>exo</string>
+		<string>txt</string>
+	</array>
+	<key>name</key>
+	<string>Exoscript</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>comment</key>
+			<string>comment</string>
+			<key>match</key>
+			<string>^(.*?)(/\*(.*?)$|//(.*?)$|#(.*?))$</string>
+			<key>name</key>
+			<string>comment.line.cs</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>storyId trailing comment</string>
+			<key>match</key>
+			<string>====(=+)</string>
+			<key>name</key>
+			<string>comment.line.cs</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>logic</string>
+			<key>match</key>
+			<string>>!|!=|=|&gt;|&lt;|&gt;=|&lt;=|%|&amp;|\?|:|\|\|</string>
+			<key>name</key>
+			<string>keyword.operator.cs</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>subchoice flow - any number of *'s!</string>
+			<key>match</key>
+			<string>\s\*+\s</string>
+			<key>name</key>
+			<string>keyword.operator.cs</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>user defined temporary variables that live in a single scene</string>
+			<key>match</key>
+			<string>var_(.*?)(?=\]|\s)</string>
+			<key>name</key>
+			<string>constant.language.cs</string>
+		</dict>
+
+		<dict>
+			<key>comment</key>
+			<string>user defined variables that live in a single playthrough</string>
+			<key>match</key>
+			<string>mem_(.*?)(?=\]|\s)</string>
+			<key>name</key>
+			<string>constant.language.cs</string>
+		</dict>
+
+		<dict>
+			<key>comment</key>
+			<string>user defined variables across all playthrough</string>
+			<key>match</key>
+			<string>hog_(.*?)(?=\]|\s)</string>
+			<key>name</key>
+			<string>constant.operator.cs</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>imperative line-opening keywords</string>
+			<key>match</key>
+			<string>^(.*?)(~ifd|~if|~setif|~set|~call)</string>
+			<key>name</key>
+			<string>keyword.control.cs</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>open-squarebracket keywords</string>
+			<key>match</key>
+			<string>\[(and|call|else|elseif|end|if|ifd|or|random|set|setif|\|)\s</string>
+			<key>name</key>
+			<string>keyword.control.cs</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>brackets</string>
+			<key>match</key>
+			<string>\[|\]</string>
+			<key>name</key>
+			<string>keyword.operator.cs</string>
+		</dict>
+
+
+
+
+
+
+
+
+		<!-- HIGHER PRIORITY ABOVE, NUMBER LITERALS, QUOTED AND UNQUOTED TEXT BELOW. -->
+
+
+
+
+
+
+
+		<dict>
+			<key>comment</key>
+			<string>numbers and bools</string>
+			<key>match</key>
+			<string>[^(a-zA-Z)]\d+|true|false|none|null|((\+|-)\d+)</string>
+			<key>name</key>
+			<string>variable.parameter.cs</string>
+		</dict>
+
+
+		<dict>
+			<key>comment</key>
+			<string>Quoted Text: Someone's Saying Something</string>
+			<key>match</key>
+			<string>(")([^"]|"")*(")</string>
+			<key>name</key>
+			<string>variable.parameter.cs</string>
+		</dict>
+	</array>
+</dict>
+</plist>
