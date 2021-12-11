@@ -13,6 +13,7 @@
 	<string>Exoscript</string>
 	<key>patterns</key>
 	<array>
+
 		<dict>
 			<key>comment</key>
 			<string>comment</string>
@@ -33,7 +34,7 @@
 			<key>comment</key>
 			<string>logic</string>
 			<key>match</key>
-			<string>>!|!=|=|&gt;|&lt;|&gt;=|&lt;=|%|&amp;|\?|:|\|\|</string>
+			<string>-|>!|!=|=|&gt;|&lt;|&gt;=|&lt;=|%|&amp;|\?|:|\|\|</string>
 			<key>name</key>
 			<string>keyword.operator.cs</string>
 		</dict>
@@ -44,6 +45,14 @@
 			<string>\s\*+\s</string>
 			<key>name</key>
 			<string>keyword.operator.cs</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>user defined variables across all playthrough</string>
+			<key>match</key>
+			<string>hog_(.*?)(?=\]|\s)</string>
+			<key>name</key>
+			<string>constant.language.cs</string>
 		</dict>
 		<dict>
 			<key>comment</key>
@@ -61,15 +70,6 @@
 			<string>mem_(.*?)(?=\]|\s)</string>
 			<key>name</key>
 			<string>constant.language.cs</string>
-		</dict>
-
-		<dict>
-			<key>comment</key>
-			<string>user defined variables across all playthrough</string>
-			<key>match</key>
-			<string>hog_(.*?)(?=\]|\s)</string>
-			<key>name</key>
-			<string>constant.operator.cs</string>
 		</dict>
 		<dict>
 			<key>comment</key>
@@ -104,12 +104,6 @@
 
 
 		<!-- HIGHER PRIORITY ABOVE, NUMBER LITERALS, QUOTED AND UNQUOTED TEXT BELOW. -->
-
-
-
-
-
-
 
 		<dict>
 			<key>comment</key>
