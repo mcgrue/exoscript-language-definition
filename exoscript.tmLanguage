@@ -1,116 +1,282 @@
-%YAML 1.2
----
-name: sample
-scope: source.sample
-file_extensions: [ sample ]
-
-contexts:
-  main:
-    - match: '(^===\s)'
-      captures:
-        0: text.sample
-    - match: '(\s\*+\s)'
-      captures:
-        0: text.sample
-    - match: '(====(=+))|(/\*(.*?)$|//(.*?)$|#(.*?))$'
-      captures:
-        0: text.sample
-    - include: tildeProcessing
-    - include: bracketProcessing
-    - include: realTextHighlighting
-    - match: '(.)'
-      captures:
-        0: text.sample
-  realTextHighlighting:
-    - match: '(\")([^\"]|\"\")*(\")'
-      captures:
-        0: text.sample
-    - match: '(^((\")([^\"]|\"\")*(\")))'
-      captures:
-        0: text.sample
-    - match: '(.)'
-      captures:
-        0: text.sample
-  randoVariable:
-    - match: '(\b([a-zA-Z_\x{0024}]([a-zA-Z_\x{0024}0-9])+)\b)'
-      captures:
-        0: text.sample
-    - match: '(.)'
-      captures:
-        0: text.sample
-  opsAndLiterals:
-    - match: '(\b(true|false|none|null)\b)'
-      captures:
-        0: text.sample
-    - match: '(&&|\+\+|\+|--|-|>!|!=|=|<|>|<=|>=|%|&|\?|:|\|\|)'
-      captures:
-        0: text.sample
-    - match: '(\!)'
-      captures:
-        0: text.sample
-    - match: '\b([0-9]+)\b'
-      captures:
-        0: text.sample
-    - match: '(.)'
-      captures:
-        0: text.sample
-  vars:
-    - match: '(var_(.*?)(?=\]|\s))'
-      captures:
-        0: text.sample
-    - match: '(mem_(.*?)(?=\]|\s))'
-      captures:
-        0: text.sample
-    - match: '(hog_(.*?)(?=\]|\s))'
-      captures:
-        0: text.sample
-    - match: '(.)'
-      captures:
-        0: text.sample
-  tildeProcessing:
-    - match: '(~)'
-      captures:
-        0: text.sample
-      push: 
-        - match: '(^(?=.{0,1})(?:|))'
-          pop: true
-          captures:
-            0: text.sample
-        - match: '(ifd|if|setif|set|call)'
-          captures:
-            0: text.sample
-        - include: main
-        - include: vars
-        - include: opsAndLiterals
-        - include: randoVariable
-        - match: '(.)'
-          captures:
-            0: text.sample
-    - match: '(.)'
-      captures:
-        0: text.sample
-  bracketProcessing:
-    - match: '(\[)'
-      captures:
-        0: text.sample
-      push: 
-        - match: '(\])'
-          pop: true
-          captures:
-            0: text.sample
-        - include: main
-        - include: vars
-        - include: opsAndLiterals
-        - include: randoVariable
-        - match: '(and|call|else|end|elseif|if|ifd|or|random|set|setif)'
-          captures:
-            0: text.sample
-        - match: '([^\x{0028}a-zA-Z\x{0029}]\\d+|true|false|none|null|((\\+|-)\\d+))'
-          captures:
-            0: text.sample
-        - match: '(.)'
-          captures:
-            0: text.sample
-    - match: '(.)'
-      captures:
-        0: text.sample
+<?xml  version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"   "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0" >
+<!-- Generated via Iro -->
+<dict>
+  <key>fileTypes</key>
+  <array> 
+    <string>exo</string>
+    <string>exotxt</string>
+    <string>txt</string>
+    <string>exo.txt</string>
+   </array>
+  <key>name</key>
+  <string>sample</string>
+  <key>patterns</key>
+  <array> 
+    <dict>
+      <key>include</key>
+      <string>#main</string>
+    </dict>
+   </array>
+  <key>scopeName</key>
+  <string>source.sample</string>
+  <key>uuid</key>
+  <string></string>
+  <key>repository</key>
+  <dict>
+    <key>main</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>match</key>
+          <string>(^===\s)</string>
+          <key>name</key>
+          <string>keyword punctuation.sample</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(\s\*+\s)</string>
+          <key>name</key>
+          <string>keyword punctuation.sample</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(====(=+))|(/\*(.*?)$|//(.*?)$|#(.*?))$</string>
+          <key>name</key>
+          <string>comment.line.sample</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#tildeProcessing</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#bracketProcessing</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#realTextHighlighting</string>
+        </dict>
+       </array>
+    </dict>
+    <key>bracketProcessing</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>begin</key>
+          <string>(\[)</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword punctuation.sample</string>
+            </dict>
+          </dict>
+          <key>patterns</key>
+          <array> 
+            <dict>
+              <key>include</key>
+              <string>#bracketProcessing__1</string>
+            </dict>
+           </array>
+          <key>end</key>
+          <string>(\])</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword punctuation.sample</string>
+            </dict>
+          </dict>
+        </dict>
+       </array>
+    </dict>
+    <key>bracketProcessing__1</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>include</key>
+          <string>#main</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#vars</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#opsAndLiterals</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#randoVariable</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(and|call|else|end|elseif|if|ifd|or|random|set|setif)</string>
+          <key>name</key>
+          <string>keyword.control.sample</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>([^\x{0028}a-zA-Z\x{0029}]\\d+|true|false|none|null|((\\+|-)\\d+))</string>
+          <key>name</key>
+          <string>constant.sample</string>
+        </dict>
+       </array>
+    </dict>
+    <key>opsAndLiterals</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>match</key>
+          <string>(\b(true|false|none|null)\b)</string>
+          <key>name</key>
+          <string>constant.sample</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(&amp;&amp;|\+\+|\+|--|-|&gt;!|!=|=|&lt;|&gt;|&lt;=|&gt;=|%|&amp;|\?|:|\|\|)</string>
+          <key>name</key>
+          <string>keyword.operator.sample</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(\!)</string>
+          <key>name</key>
+          <string>keyword.operator.sample</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>\b([0-9]+)\b</string>
+          <key>name</key>
+          <string>constant.sample</string>
+        </dict>
+       </array>
+    </dict>
+    <key>randoVariable</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>match</key>
+          <string>(\b([a-zA-Z_\x{0024}]([a-zA-Z_\x{0024}0-9])+)\b)</string>
+          <key>name</key>
+          <string>variable.language.sample</string>
+        </dict>
+       </array>
+    </dict>
+    <key>realTextHighlighting</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>match</key>
+          <string>(\&quot;)([^\&quot;]|\&quot;\&quot;)*(\&quot;)</string>
+          <key>name</key>
+          <string>text.sample</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(^((\&quot;)([^\&quot;]|\&quot;\&quot;)*(\&quot;)))</string>
+          <key>name</key>
+          <string>text.sample</string>
+        </dict>
+       </array>
+    </dict>
+    <key>tildeProcessing</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>begin</key>
+          <string>(~)</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword punctuation.sample</string>
+            </dict>
+          </dict>
+          <key>patterns</key>
+          <array> 
+            <dict>
+              <key>include</key>
+              <string>#tildeProcessing__1</string>
+            </dict>
+           </array>
+          <key>end</key>
+          <string>(^(?=.{0,1})(?:|))</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>comment.line.sample</string>
+            </dict>
+          </dict>
+        </dict>
+       </array>
+    </dict>
+    <key>tildeProcessing__1</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>match</key>
+          <string>(ifd|if|setif|set|call)</string>
+          <key>name</key>
+          <string>keyword.control.sample</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#main</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#vars</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#opsAndLiterals</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#randoVariable</string>
+        </dict>
+       </array>
+    </dict>
+    <key>vars</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>match</key>
+          <string>(var_(.*?)(?=\]|\s))</string>
+          <key>name</key>
+          <string>variable.sample</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(mem_(.*?)(?=\]|\s))</string>
+          <key>name</key>
+          <string>variable.sample</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(hog_(.*?)(?=\]|\s))</string>
+          <key>name</key>
+          <string>variable.sample</string>
+        </dict>
+       </array>
+    </dict>
+  </dict>
+</dict>
+</plist>

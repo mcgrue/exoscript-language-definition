@@ -2,27 +2,54 @@ name               = sample
 file_extensions [] = sample;
 
 styles [] {
-   .comments    : style color = "light_green";
-   .keywords    : style color = "light_blue";
-   .conditionals: style color = "pink";
+   .comments    : style {
+      color = "light_green";
+      textmate_scope = "comment.line";
+      // pygments_scope  = "Comment";
+   }
+   .keywords    : style {
+      color = "light_blue";
+      textmate_scope = "keyword.control";
+   }
+   .conditionals :style {
+      color = "pink";
+      textmate_scope = "keyword punctuation";
+   }
    
    .literals : style {
       color  = "orange";
       italic = "true";
+      
+      textmate_scope = "constant";
    }
 
-   .user_variables   : style color = "yellow"; 
-   .game_variables   : style color = "gold";
-   .operators   : style color = "red";
+   .user_variables   : style {
+      color = "yellow"; 
+      textmate_scope = "variable";
+   }
+   .game_variables   : style {
+       color = "gold";
+       textmate_scope = "variable.language";
+   }
+   .operators   : style {
+      color = "red";
+      textmate_scope = "keyword.operator";
+   }
+   
    .illegal     : style {
       color            = white
       background_color = red
+      textmate_scope = "invalid.illegal";
    }
    
-   .real_text : style color = "orange";
+   .real_text : style {
+      color = "orange";
+      textmate_scope = "text";
+   }
    .quoted_real_text : style {
       color  = "orange";
       italic = "true";
+      textmate_scope = "text";
    }
 }
 
