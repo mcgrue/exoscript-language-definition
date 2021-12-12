@@ -5,13 +5,13 @@
 <dict>
   <key>fileTypes</key>
   <array> 
+    <string>txt</string>
     <string>exo</string>
     <string>exotxt</string>
-    <string>txt</string>
     <string>exo.txt</string>
    </array>
   <key>name</key>
-  <string>sample</string>
+  <string>Exoscript</string>
   <key>patterns</key>
   <array> 
     <dict>
@@ -24,20 +24,20 @@
   <key>uuid</key>
   <string></string>
   <key>repository</key>
+
+
   <dict>
     <key>main</key>
     <dict>
       <key>patterns</key>
       <array> 
         <dict>
-          <key>match</key>
-          <string>(^===\s)</string>
-          <key>name</key>
-          <string>keyword punctuation.sample</string>
+          <key>include</key>
+          <string>#storyIdProcessing</string>
         </dict>
         <dict>
           <key>match</key>
-          <string>(\s\*+\s)</string>
+          <string>((\s*?)-(\s*?)$)</string>
           <key>name</key>
           <string>keyword punctuation.sample</string>
         </dict>
@@ -46,6 +46,10 @@
           <string>(====(=+))|(/\*(.*?)$|//(.*?)$|#(.*?))$</string>
           <key>name</key>
           <string>comment.line.sample</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#jumpProcessing</string>
         </dict>
         <dict>
           <key>include</key>
@@ -130,6 +134,90 @@
         </dict>
        </array>
     </dict>
+    <key>jumpProcessing</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>begin</key>
+          <string>(^(\s*?)(&gt;+))</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.operator.sample</string>
+            </dict>
+          </dict>
+          <key>contentName</key>
+          <string>text source.sample</string>
+          <key>end</key>
+          <string>(.*?$)</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>variable.parameter.sample</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>begin</key>
+          <string>(\s\*+\s)</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword punctuation.sample</string>
+            </dict>
+          </dict>
+          <key>contentName</key>
+          <string>text source.sample</string>
+          <key>end</key>
+          <string>(.*?$)</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>variable.parameter.sample</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>begin</key>
+          <string>(\s\*+=\s)</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword punctuation.sample</string>
+            </dict>
+          </dict>
+          <key>contentName</key>
+          <string>text source.sample</string>
+          <key>end</key>
+          <string>(.*?$)</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>variable.parameter.sample</string>
+            </dict>
+          </dict>
+        </dict>
+       </array>
+    </dict>
+    <key>jumpProcessing__1</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+       </array>
+    </dict>
     <key>opsAndLiterals</key>
     <dict>
       <key>patterns</key>
@@ -180,14 +268,50 @@
           <key>match</key>
           <string>(\&quot;)([^\&quot;]|\&quot;\&quot;)*(\&quot;)</string>
           <key>name</key>
-          <string>text.sample</string>
+          <string>text source.sample</string>
         </dict>
         <dict>
           <key>match</key>
           <string>(^((\&quot;)([^\&quot;]|\&quot;\&quot;)*(\&quot;)))</string>
           <key>name</key>
-          <string>text.sample</string>
+          <string>text source.sample</string>
         </dict>
+       </array>
+    </dict>
+    <key>storyIdProcessing</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>begin</key>
+          <string>(^===\s)</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword punctuation.sample</string>
+            </dict>
+          </dict>
+          <key>contentName</key>
+          <string>text source.sample</string>
+          <key>end</key>
+          <string>(\b([a-zA-Z_\x{0024}]([a-zA-Z_\x{0024}0-9])+)\b)</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.class.sample</string>
+            </dict>
+          </dict>
+        </dict>
+       </array>
+    </dict>
+    <key>storyIdProcessing__1</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
        </array>
     </dict>
     <key>tildeProcessing</key>
@@ -253,6 +377,18 @@
         </dict>
        </array>
     </dict>
+    <key>uid_subchoice_flow</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+       </array>
+    </dict>
+    <key>uid_subchoice_flow_break</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+       </array>
+    </dict>
     <key>vars</key>
     <dict>
       <key>patterns</key>
@@ -261,19 +397,19 @@
           <key>match</key>
           <string>(var_(.*?)(?=\]|\s))</string>
           <key>name</key>
-          <string>variable.sample</string>
+          <string>variable.parameter.sample</string>
         </dict>
         <dict>
           <key>match</key>
           <string>(mem_(.*?)(?=\]|\s))</string>
           <key>name</key>
-          <string>variable.sample</string>
+          <string>variable.parameter.sample</string>
         </dict>
         <dict>
           <key>match</key>
           <string>(hog_(.*?)(?=\]|\s))</string>
           <key>name</key>
-          <string>variable.sample</string>
+          <string>variable.parameter.sample</string>
         </dict>
        </array>
     </dict>

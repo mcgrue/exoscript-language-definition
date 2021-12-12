@@ -22,10 +22,15 @@ styles [] {
       
       textmate_scope = "constant";
    }
+   
+   .story_ids : style {
+      color = "pink"; 
+      textmate_scope = "entity.name.class";
+   }
 
    .user_variables   : style {
       color = "yellow"; 
-      textmate_scope = "variable";
+      textmate_scope = "variable.parameter";
    }
    .game_variables   : style {
        color = "gold";
@@ -43,13 +48,13 @@ styles [] {
    }
    
    .real_text : style {
-      color = "orange";
-      textmate_scope = "text";
+      color = "#BBBBAA";
+      textmate_scope = "text source";
    }
    .quoted_real_text : style {
-      color  = "orange";
+      color  = "#EEEEDD";
       italic = "true";
-      textmate_scope = "text";
+      textmate_scope = "text source";
    }
 }
 
@@ -176,25 +181,85 @@ contexts[] {
             styles []   = .literals;
          }
       }
-   
    }
+   
+   jumpProcessing : context {
+   
+      : inline_push {
+         regex         \= (^(\s*?)(>+))
+         styles []      = .operators;
+         default_style  = ".real_text";
+
+   
+         : pop {
+            regex      \= (.*?$)
+            styles []   = .user_variables;
+         }
+      }
+      
+      //subchoice flow - any number of *'s
+      : inline_push {
+         uid         = uid_subchoice_flow
+         regex       \= (\s\*+\s)
+         styles []   = .conditionals;          
+         default_style  = ".real_text";
+         
+         : pop {
+            regex      \= (.*?$)
+            styles []   = .user_variables;
+         }
+      }
+      
+      // Any number of *'s... and a =
+      : inline_push {
+         uid         = uid_subchoice_flow_break
+         regex         \= (\s\*+=\s)
+         styles []      = .conditionals;            
+         default_style  = ".real_text";
+
+   
+         : pop {
+            regex      \= (.*?$)
+            styles []   = .user_variables;
+         }
+      }
+      
+   }
+
+
+   storyIdProcessing : context {
+   
+      : inline_push {
+         regex         \= (^===\s)
+         styles []      = .conditionals;
+         default_style  = ".real_text";
+
+   
+         : pop {
+            regex      \= (\b([a-zA-Z_$]([a-zA-Z_$0-9])+)\b)
+            styles []   = .story_ids;
+         }
+   
+      }
+   }
+   
+   
 
    main : context {
    
-      
+      default_style  = ".real_text";
    
+      : include "storyIdProcessing";
+      
+      
+      // for any number of whitespaces, a single -, any number of whitespaces, and a newline
       : pattern {
-         uid         = uid_story_id
-         regex       \= (^===\s)
+         uid         = uid_hard_break
+         regex       \= ((\s*?)-(\s*?)$)
          styles []   = .conditionals;            
       }
       
-      //subchoice flow - any number of *'s!
-      : pattern {
-         uid         = uid_subchoice_flow
-         regex       \= (\s\*+\s)
-         styles []   = .conditionals;            
-      }
+      
    
    
       // comments
@@ -204,8 +269,10 @@ contexts[] {
          styles[]       = .comments;
       }
       
+      : include "jumpProcessing";
       : include "tildeProcessing";
       : include "bracketProcessing";
+      
       
       : include "realTextHighlighting";
    }

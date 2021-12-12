@@ -1,0 +1,22 @@
+
+-=|\+=|\+|--|\+\+|-|\+|
+
+
+
+within []'s:  
+
+
+
+
+
+
+
+=== <- class 
+= <- var // let's say
+>>>
+>
+>!
+
+
+
+[if random : hunting feral dogs|trying to find some clean drinking water|looking for a working sparkplug]
