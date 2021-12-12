@@ -41,38 +41,45 @@ styles [] {
       textmate_scope = "keyword.operator";
    }
    
-   .illegal     : style {
-      color            = white
-      background_color = red
-      textmate_scope = "invalid.illegal";
-   }
-   
    .real_text : style {
       color = "#BBBBAA";
-      textmate_scope = "text source";
-   }
-   .quoted_real_text : style {
-      color  = "#EEEEDD";
-      italic = "true";
       textmate_scope = "text source";
    }
 }
 
 contexts[] {
 
-   realTextHighlighting : context {
-
+   interpolatingVariables : context {
+         : inline_push {
+            uid         = uid_interpolating_vars_in_text_open
+            regex       \= ((\[\=|\[)(\b))
+            styles []   = .conditionals;
+            
+         : pop {
+            uid         = uid_interpolating_vars_in_text_close
+            regex      \= (\])
+            styles []   = .conditionals;
+         }            
+          
          : pattern {
-            uid         = uid_quoted_real_text
-            regex       \= (\")([^\"]|\"\")*(\")
-            styles []   = .quoted_real_text;
+            uid         = uid_interpolating_vars_in_text
+            regex       \= ([a-zA-Z_$]([a-zA-Z_$0-9])+)
+            styles []   = .game_variables;
          }
          
          : pattern {
-            uid         = uid_everything_else
-            regex       \= (^((\")([^\"]|\"\")*(\")))
-            styles []   = .real_text;
-         } 
+            uid         = uid_interpolated_var_pipes_for_gender_thruples
+            regex       \= (\|)
+            styles []   = .conditionals;
+         }
+
+      }   
+   }
+   
+   
+
+   realTextHighlighting : context {
+         : include "interpolatingVariables" ;
    }
 
    randoVariable : context {
@@ -152,9 +159,32 @@ contexts[] {
    
    bracketProcessing : context {
    
+      // the [if random : hunting feral dogs|trying to find some clean drinking water|looking for a working sparkplug]
+      // construct.  I'm going to assume it can be infinitely long!
+      : inline_push {
+         regex         \= (\[if(\s*?)random(\s*?):)
+         styles []      = .conditionals;
+
+         : pop {
+            regex      \= (\])
+            styles []   = .conditionals;
+         }
+         
+         : pattern {
+            regex       \= (\|)
+            styles []   = .conditionals;
+         }
+         
+         : pattern {
+            regex       \= (^[\|])
+            styles []   = .real_text;
+         }
+      }
+   
+   
       // conditionals (The "[...]" check)
       // Todo: the [They|He\She] check
-      // Todo: the [if random : hunting feral dogs|trying to find some clean drinking water|looking for a working sparkplug]
+      // Todo: 
    
       : inline_push {
          regex         \= (\[)
@@ -164,7 +194,7 @@ contexts[] {
             regex      \= (\])
             styles []   = .conditionals;
          }
-   
+
          : include "main" ;
          : include "vars" ;
          : include "opsAndLiterals";
@@ -217,7 +247,6 @@ contexts[] {
          styles []      = .conditionals;            
          default_style  = ".real_text";
 
-   
          : pop {
             regex      \= (.*?$)
             styles []   = .user_variables;
@@ -226,7 +255,6 @@ contexts[] {
       
    }
 
-
    storyIdProcessing : context {
    
       : inline_push {
@@ -234,7 +262,6 @@ contexts[] {
          styles []      = .conditionals;
          default_style  = ".real_text";
 
-   
          : pop {
             regex      \= (\b([a-zA-Z_$]([a-zA-Z_$0-9])+)\b)
             styles []   = .story_ids;
@@ -242,8 +269,6 @@ contexts[] {
    
       }
    }
-   
-   
 
    main : context {
    
@@ -259,8 +284,6 @@ contexts[] {
          styles []   = .conditionals;            
       }
       
-      
-   
    
       // comments
       : pattern {

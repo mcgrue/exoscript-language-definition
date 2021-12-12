@@ -24,8 +24,6 @@
   <key>uuid</key>
   <string></string>
   <key>repository</key>
-
-
   <dict>
     <key>main</key>
     <dict>
@@ -71,7 +69,7 @@
       <array> 
         <dict>
           <key>begin</key>
-          <string>(\[)</string>
+          <string>(\[if(\s*?)random(\s*?):)</string>
           <key>beginCaptures</key>
           <dict>
             <key>1</key>
@@ -98,9 +96,56 @@
             </dict>
           </dict>
         </dict>
+        <dict>
+          <key>begin</key>
+          <string>(\[)</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword punctuation.sample</string>
+            </dict>
+          </dict>
+          <key>patterns</key>
+          <array> 
+            <dict>
+              <key>include</key>
+              <string>#bracketProcessing__2</string>
+            </dict>
+           </array>
+          <key>end</key>
+          <string>(\])</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword punctuation.sample</string>
+            </dict>
+          </dict>
+        </dict>
        </array>
     </dict>
     <key>bracketProcessing__1</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>match</key>
+          <string>(\|)</string>
+          <key>name</key>
+          <string>keyword punctuation.sample</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(^[\|])</string>
+          <key>name</key>
+          <string>text source.sample</string>
+        </dict>
+       </array>
+    </dict>
+    <key>bracketProcessing__2</key>
     <dict>
       <key>patterns</key>
       <array> 
@@ -131,6 +176,41 @@
           <string>([^\x{0028}a-zA-Z\x{0029}]\\d+|true|false|none|null|((\\+|-)\\d+))</string>
           <key>name</key>
           <string>constant.sample</string>
+        </dict>
+       </array>
+    </dict>
+    <key>interpolatingVariables</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>begin</key>
+          <string>((\[\=|\[)(\b))</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword punctuation.sample</string>
+            </dict>
+          </dict>
+          <key>patterns</key>
+          <array> 
+            <dict>
+              <key>include</key>
+              <string>#uid_interpolating_vars_in_text_open</string>
+            </dict>
+           </array>
+          <key>end</key>
+          <string>(\])</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword punctuation.sample</string>
+            </dict>
+          </dict>
         </dict>
        </array>
     </dict>
@@ -265,16 +345,8 @@
       <key>patterns</key>
       <array> 
         <dict>
-          <key>match</key>
-          <string>(\&quot;)([^\&quot;]|\&quot;\&quot;)*(\&quot;)</string>
-          <key>name</key>
-          <string>text source.sample</string>
-        </dict>
-        <dict>
-          <key>match</key>
-          <string>(^((\&quot;)([^\&quot;]|\&quot;\&quot;)*(\&quot;)))</string>
-          <key>name</key>
-          <string>text source.sample</string>
+          <key>include</key>
+          <string>#interpolatingVariables</string>
         </dict>
        </array>
     </dict>
@@ -374,6 +446,24 @@
         <dict>
           <key>include</key>
           <string>#randoVariable</string>
+        </dict>
+       </array>
+    </dict>
+    <key>uid_interpolating_vars_in_text_open</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>match</key>
+          <string>([a-zA-Z_\x{0024}]([a-zA-Z_\x{0024}0-9])+)</string>
+          <key>name</key>
+          <string>variable.language.sample</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(\|)</string>
+          <key>name</key>
+          <string>keyword punctuation.sample</string>
         </dict>
        </array>
     </dict>
