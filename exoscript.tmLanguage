@@ -244,6 +244,30 @@
         </dict>
         <dict>
           <key>begin</key>
+          <string>(^\s*=[^\x{003d}])</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword punctuation.sample</string>
+            </dict>
+          </dict>
+          <key>contentName</key>
+          <string>text source.sample</string>
+          <key>end</key>
+          <string>(.*?$)</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>variable.parameter.sample</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>begin</key>
           <string>(\s\*+\s)</string>
           <key>beginCaptures</key>
           <dict>
@@ -447,6 +471,12 @@
           <key>include</key>
           <string>#randoVariable</string>
         </dict>
+       </array>
+    </dict>
+    <key>uid_choiceid_identifier</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
        </array>
     </dict>
     <key>uid_interpolating_vars_in_text_open</key>
