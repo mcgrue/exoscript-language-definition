@@ -230,7 +230,7 @@ contexts[] {
       //choiceid identifier - just = followed by a word
       : inline_push {
          uid         = uid_choiceid_identifier
-         regex       \= (^\s*=[^=])
+         regex       \= (^\s*=(?!=))
          styles []   = .conditionals;          
          default_style  = ".real_text";
          

@@ -244,7 +244,7 @@
         </dict>
         <dict>
           <key>begin</key>
-          <string>(^\s*=[^\x{003d}])</string>
+          <string>(^\s*=(?!=))</string>
           <key>beginCaptures</key>
           <dict>
             <key>1</key>
