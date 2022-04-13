@@ -227,6 +227,19 @@ contexts[] {
          }
       }
       
+      //choiceid identifier - just = followed by a word
+      : inline_push {
+         uid         = uid_choiceid_identifier
+         regex       \= (^\s*=(?!=))
+         styles []   = .conditionals;          
+         default_style  = ".real_text";
+         
+         : pop {
+            regex      \= (.*?$)
+            styles []   = .user_variables;
+         }
+      }
+      
       //subchoice flow - any number of *'s
       : inline_push {
          uid         = uid_subchoice_flow
