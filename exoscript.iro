@@ -52,31 +52,31 @@ contexts[] {
    interpolatingVariables : context {
          : inline_push {
             uid         = uid_interpolating_vars_in_text_open
-            regex       \= ((\[\=|\[)(\b))
+            regex       \= ((\[\=|\[)((?![A-Za-zÀ-ÖØ-öø-ÿ])))
             styles []   = .conditionals;
-            
+
          : pop {
             uid         = uid_interpolating_vars_in_text_close
             regex      \= (\])
             styles []   = .conditionals;
-         }            
-          
+         }
+
          : pattern {
             uid         = uid_interpolating_vars_in_text
             regex       \= ([a-zA-Z_$]([a-zA-Z_$0-9])+)
             styles []   = .game_variables;
          }
-         
+
          : pattern {
             uid         = uid_interpolated_var_pipes_for_gender_thruples
             regex       \= (\|)
             styles []   = .conditionals;
          }
 
-      }   
+      }
    }
-   
-   
+
+
 
    realTextHighlighting : context {
          : include "interpolatingVariables" ;
@@ -85,7 +85,7 @@ contexts[] {
    randoVariable : context {
          : pattern {
             uid         = uid_rando_variable
-            regex       \= (\b([a-zA-Z_$]([a-zA-Z_$0-9])+)\b)
+            regex       \= ((?<![A-Za-zÀ-ÖØ-öø-ÿ])([A-Za-zÀ-ÿ_$]([A-Za-zÀ-ÿ_$0-9])+)(?![A-Za-zÀ-ÖØ-öø-ÿ]))
             styles []   = .game_variables;
          }
    }
@@ -94,24 +94,24 @@ contexts[] {
          // number and boolean literals {
          : pattern {
             uid         = uid_story_id
-            regex       \= (\b(true|false|none|null)\b)
+            regex       \= ((?<![A-Za-zÀ-ÖØ-öø-ÿ])(true|false|none|null)(?![A-Za-zÀ-ÖØ-öø-ÿ]))
             styles []   = .literals;
          }
-   
+
          // operators
          : pattern {
             regex       \= (&&|\+\+|\+|--|-|>!|!=|=|<|>|<=|>=|%|&|\?|:|\|\|)
             styles []   = .operators;
          }
-   
+
          : pattern {
             regex       \= (\!)
             styles []   = .operators;
          }
-   
-   
+
+
          : pattern {
-            regex       \= \b([0-9]+)\b
+            regex       \= (?<![A-Za-zÀ-ÖØ-öø-ÿ])([0-9]+)(?![A-Za-zÀ-ÖØ-öø-ÿ])
             styles []   = .literals;
          }
    }
@@ -122,43 +122,43 @@ contexts[] {
          regex         \= (var_(.*?)(?=\]|\s))
          styles[]       = .user_variables;
       }
-      
+
       : pattern {
          uid            = uid_single_game_variables
          regex         \= (mem_(.*?)(?=\]|\s))
          styles[]       = .user_variables;
       }
-      
+
       : pattern {
          uid            = uid_all_game_groundhogs_day_variables
          regex         \= (hog_(.*?)(?=\]|\s))
          styles[]       = .user_variables;
       }
    }
-   
+
    tildeProcessing : context {
       // The "~" check
       : inline_push {
          regex         \= (~)
          styles []      = .conditionals;
-   
+
          : eol_pop {}
 
-         // imperatives with a preceding ~ 
+         // imperatives with a preceding ~
          : pattern {
             regex       \= (ifd|if|setif|set|call)
             styles []   = .keywords;
          }
-         
+
          : include "main" ;
          : include "vars" ;
          : include "opsAndLiterals";
          : include "randoVariable";
       }
    }
-   
+
    bracketProcessing : context {
-   
+
       // the [if random : hunting feral dogs|trying to find some clean drinking water|looking for a working sparkplug]
       // construct.  I'm going to assume it can be infinitely long!
       : inline_push {
@@ -169,27 +169,27 @@ contexts[] {
             regex      \= (\])
             styles []   = .conditionals;
          }
-         
+
          : pattern {
             regex       \= (\|)
             styles []   = .conditionals;
          }
-         
+
          : pattern {
             regex       \= (^[\|])
             styles []   = .real_text;
          }
       }
-   
-   
+
+
       // conditionals (The "[...]" check)
       // Todo: the [They|He\She] check
-      // Todo: 
-   
+      // Todo:
+
       : inline_push {
          regex         \= (\[)
          styles []      = .conditionals;
-   
+
          : pop {
             regex      \= (\])
             styles []   = .conditionals;
@@ -199,65 +199,65 @@ contexts[] {
          : include "vars" ;
          : include "opsAndLiterals";
          : include "randoVariable";
-   
+
          : pattern {
             regex       \= (and|call|else|end|elseif|if|ifd|or|random|set|setif)
             styles []   = .keywords;
          }
-   
+
          // number and boolean literals {
          : pattern {
-            regex       \= ([^(a-zA-Z)]\\d+|true|false|none|null|((\\+|-)\\d+))
+            regex       \= ([^(A-Za-zÀ-ÿ)]\\d+|true|false|none|null|((\\+|-)\\d+))
             styles []   = .literals;
          }
       }
    }
-   
+
    jumpProcessing : context {
-   
+
       : inline_push {
          regex         \= (^(\s*?)(>+))
          styles []      = .operators;
          default_style  = ".real_text";
 
-   
+
          : pop {
             regex      \= (.*?$)
             styles []   = .user_variables;
          }
       }
-      
+
       //choiceid identifier - just = followed by a word
       : inline_push {
          uid         = uid_choiceid_identifier
          regex       \= (^\s*=(?!=))
-         styles []   = .conditionals;          
+         styles []   = .conditionals;
          default_style  = ".real_text";
-         
+
          : pop {
             regex      \= (.*?$)
             styles []   = .user_variables;
          }
       }
-      
+
       //subchoice flow - any number of *'s
       : inline_push {
          uid         = uid_subchoice_flow
          regex       \= (\s\*+\s)
-         styles []   = .conditionals;          
+         styles []   = .conditionals;
          default_style  = ".real_text";
-         
+
          : pop {
             regex      \= (.*?$)
             styles []   = .user_variables;
          }
       }
-      
+
       // Any number of *'s... and a =
       : inline_push {
          uid         = uid_subchoice_flow_break
          regex         \= (\s\*+=\s)
-         styles []      = .conditionals;            
+         styles []      = .conditionals;
          default_style  = ".real_text";
 
          : pop {
@@ -265,51 +265,51 @@ contexts[] {
             styles []   = .user_variables;
          }
       }
-      
+
    }
 
    storyIdProcessing : context {
-   
+
       : inline_push {
          regex         \= (^===\s)
          styles []      = .conditionals;
          default_style  = ".real_text";
 
          : pop {
-            regex      \= (\b([a-zA-Z_$]([a-zA-Z_$0-9])+)\b)
+            regex      \= ((?<![A-Za-zÀ-ÖØ-öø-ÿ])([a-zA-Z_$]([A-Za-zÀ-ÿ_$0-9])+)(?![A-Za-zÀ-ÖØ-öø-ÿ]))
             styles []   = .story_ids;
          }
-   
+
       }
    }
 
    main : context {
-   
+
       default_style  = ".real_text";
-   
+
       : include "storyIdProcessing";
-      
-      
+
+
       // for any number of whitespaces, a single -, any number of whitespaces, and a newline
       : pattern {
          uid         = uid_hard_break
          regex       \= ((\s*?)-(\s*?)$)
-         styles []   = .conditionals;            
+         styles []   = .conditionals;
       }
-      
-   
+
+
       // comments
       : pattern {
          uid            = uid_single_line_comment
          regex         \= (====(=+))|(/\*(.*?)$|//(.*?)$|#(.*?))$
          styles[]       = .comments;
       }
-      
+
       : include "jumpProcessing";
       : include "tildeProcessing";
       : include "bracketProcessing";
-      
-      
+
+
       : include "realTextHighlighting";
    }
 }

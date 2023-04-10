@@ -13,7 +13,7 @@
   <key>name</key>
   <string>Exoscript</string>
   <key>patterns</key>
-  <array> 
+  <array>
     <dict>
       <key>include</key>
       <string>#main</string>
@@ -28,7 +28,7 @@
     <key>main</key>
     <dict>
       <key>patterns</key>
-      <array> 
+      <array>
         <dict>
           <key>include</key>
           <string>#storyIdProcessing</string>
@@ -66,7 +66,7 @@
     <key>bracketProcessing</key>
     <dict>
       <key>patterns</key>
-      <array> 
+      <array>
         <dict>
           <key>begin</key>
           <string>(\[if(\s*?)random(\s*?):)</string>
@@ -79,7 +79,7 @@
             </dict>
           </dict>
           <key>patterns</key>
-          <array> 
+          <array>
             <dict>
               <key>include</key>
               <string>#bracketProcessing__1</string>
@@ -108,7 +108,7 @@
             </dict>
           </dict>
           <key>patterns</key>
-          <array> 
+          <array>
             <dict>
               <key>include</key>
               <string>#bracketProcessing__2</string>
@@ -130,7 +130,7 @@
     <key>bracketProcessing__1</key>
     <dict>
       <key>patterns</key>
-      <array> 
+      <array>
         <dict>
           <key>match</key>
           <string>(\|)</string>
@@ -148,7 +148,7 @@
     <key>bracketProcessing__2</key>
     <dict>
       <key>patterns</key>
-      <array> 
+      <array>
         <dict>
           <key>include</key>
           <string>#main</string>
@@ -173,7 +173,7 @@
         </dict>
         <dict>
           <key>match</key>
-          <string>([^\x{0028}a-zA-Z\x{0029}]\\d+|true|false|none|null|((\\+|-)\\d+))</string>
+          <string>([^\x{0028}A-Za-z\x{00c0}-\x{00ff}\x{0029}]\\d+|true|false|none|null|((\\+|-)\\d+))</string>
           <key>name</key>
           <string>constant.sample</string>
         </dict>
@@ -182,10 +182,10 @@
     <key>interpolatingVariables</key>
     <dict>
       <key>patterns</key>
-      <array> 
+      <array>
         <dict>
           <key>begin</key>
-          <string>((\[\=|\[)(\b))</string>
+          <string>((\[\=|\[)((?![A-Za-z\x{00c0}-\x{00d6}\x{00d8}-\x{00f6}\x{00f8}-\x{00ff}])))</string>
           <key>beginCaptures</key>
           <dict>
             <key>1</key>
@@ -195,7 +195,7 @@
             </dict>
           </dict>
           <key>patterns</key>
-          <array> 
+          <array>
             <dict>
               <key>include</key>
               <string>#uid_interpolating_vars_in_text_open</string>
@@ -217,7 +217,7 @@
     <key>jumpProcessing</key>
     <dict>
       <key>patterns</key>
-      <array> 
+      <array>
         <dict>
           <key>begin</key>
           <string>(^(\s*?)(&gt;+))</string>
@@ -319,16 +319,16 @@
     <key>jumpProcessing__1</key>
     <dict>
       <key>patterns</key>
-      <array> 
+      <array>
        </array>
     </dict>
     <key>opsAndLiterals</key>
     <dict>
       <key>patterns</key>
-      <array> 
+      <array>
         <dict>
           <key>match</key>
-          <string>(\b(true|false|none|null)\b)</string>
+          <string>((?&lt;![A-Za-z\x{00c0}-\x{00d6}\x{00d8}-\x{00f6}\x{00f8}-\x{00ff}])(true|false|none|null)(?![A-Za-z\x{00c0}-\x{00d6}\x{00d8}-\x{00f6}\x{00f8}-\x{00ff}]))</string>
           <key>name</key>
           <string>constant.sample</string>
         </dict>
@@ -346,7 +346,7 @@
         </dict>
         <dict>
           <key>match</key>
-          <string>\b([0-9]+)\b</string>
+          <string>(?&lt;![A-Za-z\x{00c0}-\x{00d6}\x{00d8}-\x{00f6}\x{00f8}-\x{00ff}])([0-9]+)(?![A-Za-z\x{00c0}-\x{00d6}\x{00d8}-\x{00f6}\x{00f8}-\x{00ff}])</string>
           <key>name</key>
           <string>constant.sample</string>
         </dict>
@@ -355,10 +355,10 @@
     <key>randoVariable</key>
     <dict>
       <key>patterns</key>
-      <array> 
+      <array>
         <dict>
           <key>match</key>
-          <string>(\b([a-zA-Z_\x{0024}]([a-zA-Z_\x{0024}0-9])+)\b)</string>
+          <string>((?&lt;![A-Za-z\x{00c0}-\x{00d6}\x{00d8}-\x{00f6}\x{00f8}-\x{00ff}])([A-Za-z\x{00c0}-\x{00ff}_\x{0024}]([A-Za-z\x{00c0}-\x{00ff}_\x{0024}0-9])+)(?![A-Za-z\x{00c0}-\x{00d6}\x{00d8}-\x{00f6}\x{00f8}-\x{00ff}]))</string>
           <key>name</key>
           <string>variable.language.sample</string>
         </dict>
@@ -367,7 +367,7 @@
     <key>realTextHighlighting</key>
     <dict>
       <key>patterns</key>
-      <array> 
+      <array>
         <dict>
           <key>include</key>
           <string>#interpolatingVariables</string>
@@ -377,7 +377,7 @@
     <key>storyIdProcessing</key>
     <dict>
       <key>patterns</key>
-      <array> 
+      <array>
         <dict>
           <key>begin</key>
           <string>(^===\s)</string>
@@ -392,7 +392,7 @@
           <key>contentName</key>
           <string>text source.sample</string>
           <key>end</key>
-          <string>(\b([a-zA-Z_\x{0024}]([a-zA-Z_\x{0024}0-9])+)\b)</string>
+          <string>((?&lt;![A-Za-z\x{00c0}-\x{00d6}\x{00d8}-\x{00f6}\x{00f8}-\x{00ff}])([a-zA-Z_\x{0024}]([A-Za-z\x{00c0}-\x{00ff}_\x{0024}0-9])+)(?![A-Za-z\x{00c0}-\x{00d6}\x{00d8}-\x{00f6}\x{00f8}-\x{00ff}]))</string>
           <key>endCaptures</key>
           <dict>
             <key>1</key>
